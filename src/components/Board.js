@@ -13,6 +13,7 @@ const Board = ({rows, columns, matrix}) => {
     const boardRef = useRef()
     const blockList = useRef([])
     const blockRefList = useRef([])
+    let og_block_color = useRef()
 
     if (blockRefList.current.length !== arrLength) {
         // add or remove refs
@@ -29,7 +30,7 @@ const Board = ({rows, columns, matrix}) => {
         block.classList.remove("rotateThree");
         block.classList.remove("rotateFour");
 
-        const og_backgroundColor = window.getComputedStyle(block).backgroundColor;
+        const og_backgroundColor = og_block_color.current;
         block.classList.add("rotateOne")
         let colorString
         let value_of_this_block = val.current
@@ -248,6 +249,13 @@ const Board = ({rows, columns, matrix}) => {
         }
         return blockList.current
     }
+
+    useEffect(() => {
+            let b = document.getElementById(1);
+            const styles = window.getComputedStyle(b)
+            og_block_color.current = styles.getPropertyValue('backgroundColor')
+        }, []
+    )
 
     return(
         <div className="board" 
