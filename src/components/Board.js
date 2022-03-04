@@ -102,7 +102,7 @@ const Board = ({rows, columns, matrix}) => {
     }
 
     const checkIfCountWon = count => {
-        if (count === connect_how_many+1){
+        if (count >= connect_how_many+1){
             alert("GG YOU WIN")
         }
     }
