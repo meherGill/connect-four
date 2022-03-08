@@ -10,7 +10,7 @@ const Block = ({address, onClickHandler, curr_val, flipTheBlock, id}) => {
     } 
 
     return (
-        <div id={id} className="h-full w-full bg-gray-100 border-2 border-black rounded-md transition duration-50"
+        <div id={id} className="blocks h-full w-full bg-gray-100 border-2 border-black rounded-md transition duration-50"
         ref={blockRef}
         onClick={onClickInner}>
 

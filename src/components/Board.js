@@ -6,6 +6,9 @@ const block_dimension = "80" //in px
 const duration = 50;
 const connect_how_many = 4;
 
+const functionPreventPropogation = (e) => {
+    e.stopPropagation()
+}
 const Board = ({rows, columns, matrix}) => {
 
     const arrLength = rows*columns;
@@ -22,6 +25,18 @@ const Board = ({rows, columns, matrix}) => {
           .map((_, i) => blockRefList.current[i] || createRef());
       }
     const val = useRef(1)
+    
+    const disablePropogation = () => {
+        const board = document.querySelector(".board")
+        board.addEventListener('click' , functionPreventPropogation)
+        console.log("w")
+    }
+
+    const enablePropogation = () => {
+        const board = document.querySelector(".board")
+        board.removeEventListener('click' , functionPreventPropogation)
+        console.log("l")
+    }
 
     const flipTheBlock = (full_or_ThreeQuarter, block) => {
         
@@ -34,6 +49,7 @@ const Board = ({rows, columns, matrix}) => {
         block.classList.add("rotateOne")
         let colorString
         let value_of_this_block = val.current
+
         setTimeout(() => {
             if (value_of_this_block === 1){
                 
@@ -52,7 +68,7 @@ const Board = ({rows, columns, matrix}) => {
                     setTimeout(() => {
                         block.style.backgroundColor = og_backgroundColor;
                         block.classList.add("rotateFour")
-                        setTimeout(() => {
+                        setTimeout(() => { 
 
                         }, duration)
                     }, duration)
@@ -62,6 +78,8 @@ const Board = ({rows, columns, matrix}) => {
     }
 
     const onBlockClickHandler = (address) => {
+        val.current = val.current*-1;
+        disablePropogation()
         const column_clicked = address[1]
         let i;
         for (i = 0; i < rows; i++){
@@ -77,6 +95,7 @@ const Board = ({rows, columns, matrix}) => {
             const x = blockRefList.current[column_clicked];
             let bl = document.getElementById(x.props.id)
             flipTheBlock(0.75,bl)
+            enablePropogation()
         }
         else{
             matrix[i-1][column_clicked] = val.current
@@ -90,6 +109,7 @@ const Board = ({rows, columns, matrix}) => {
                     let bl = document.getElementById(block.props.id)
                     if (k === listOfBlocksToAnimate.length-1){
                         flipTheBlock(0.75,bl)
+                        enablePropogation()
                     }
                     else{
                         flipTheBlock(1,bl)
@@ -98,7 +118,7 @@ const Board = ({rows, columns, matrix}) => {
             }
         }
         checkIfLastMoveWon([i-1, column_clicked])
-        val.current = val.current*-1;
+
     }
 
     const checkIfCountWon = count => {
