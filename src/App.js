@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import './App.css';
 import Board from './components/Board'
 
-const rows = 6;
-const columns = 7;
+const rows = 5;
+const columns = 6;
 function App() {
 
   const createEmptyMatrix = (rows, columns) => {
